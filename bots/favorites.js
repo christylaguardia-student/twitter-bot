@@ -4,23 +4,23 @@ const twit = require('twit');
 const config = require('../config');
 const Twitter = new twit(config);
 
-const favorites = () => {
-  const params = {
-    q: '#nodejs, #Nodejs, #NodeJS, #javascript, #JavaScript',
-    result_type: 'recent',
-    lang: 'en'
-  };
+function randomTweet(tweets) {
+  const randomNum = Math.floor(Math.random() * tweets.length);
+  return tweets[randomNum];
+}
 
+const favorites = (params) => {
   Twitter.get('search/tweets', params, (err, data) => {
-    const tweets = data.statuses;
-    const randomNum = Math.floor(Math.random() * tweets.length);
-    const randomTweet = tweets[randomNum];
+    if (err) return console.log('search error', err);
+    if (data.statuses.length === 0) return console.log('no tweets found');
 
-    if (typeof randomTweet != 'undefined') {
+    const tweet = randomTweet(data.statuses);
+
+    if (typeof tweet != 'undefined') {
       Twitter.post('favorites/create', {
-        id: randomTweet.id_str
+        id: tweet.id_str
       }, (err, res) => {
-        if (err) console.log('favorites POST error', err);
+        if (err) console.log('favorites POST error');
         if (res) console.log('favorites POST successful');
       });
     }

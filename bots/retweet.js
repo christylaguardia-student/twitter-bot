@@ -4,24 +4,25 @@ const twit = require('twit');
 const config = require('../config');
 const Twitter = new twit(config);
 
-const retweet = () => {
-  const params = {
-    q: '#nodejs, #Nodejs, #NodeJS, #javascript, #JavaScript',
-    result_type: 'recent',
-    lang: 'en'
-  };
+function randomTweet(tweets) {
+  const randomNum = Math.floor(Math.random() * tweets.length);
+  return tweets[randomNum];
+}
 
+const retweet = (params) => {
   Twitter.get('search/tweets', params, (err, data) => {
-    if (!err) {
-      const retweetId = data.statuses[0].id_str;
+    if (err) return console.log('search error', err);
+    if (data.statuses.length === 0) return console.log('no tweets found');
+
+    const tweet = randomTweet(data.statuses);
+      
+    if (typeof tweet != 'undefined') {
       Twitter.post('statuses/retweet/:id', {
-        id: retweetId
+        id: tweet.id_str
       }, (err, res) => {
-        if (err) console.log('retweet POST error', err);
+        if (err) console.log('retweet POST error');
         if (res) console.log('retweet POST successful');
       });
-    } else {
-      console.log('search error', err);
     }
   });
 };
