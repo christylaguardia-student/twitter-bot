@@ -1,7 +1,7 @@
-const tweet = require('./tweet');
-const hashtags = require('./hashtags');
+const tweet = require('./src/tweet');
+const hashtags = require('./src/hashtags');
 
-const interval = 120000; // 2 minutes
+const interval = 5000;//120000; // 2 minutes
 
 const params = {
   q: hashtags,

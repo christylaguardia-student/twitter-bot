@@ -6,8 +6,9 @@ const hashtags = [
   '#es6',
   '#reactjs',
   '#mongodb',
-  '#trumprussia',
-  '#napafire'
+  '#napafire',
+  '#santarosafire',
+  '#breaking'
 ];
 
 module.exports = hashtags.join(', ', '');
