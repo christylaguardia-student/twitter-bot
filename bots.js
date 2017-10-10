@@ -1,14 +1,26 @@
-const retweet = require('./bots/retweet');
-const favorites = require('./bots/favorites');
+const tweet = require('./tweet');
+const hashtags = require('./hashtags');
 
-// initial retweet
-retweet();
+const interval = 120000; // 2 minutes
 
-// initial favorite
-favorites();
+const params = {
+  q: hashtags,
+  result_type: 'recent',
+  lang: 'en'
+};
 
-// generate random tweet every minute
-setInterval(retweet, 10000);
+// initial tweets
+tweet(params, 'statuses/retweet/:id');
+tweet(params, 'favorites/create');
 
-// generate random favorite every minute
-setInterval(favorites, 10000);
+// scheduled tweets
+setInterval(() => {
+  try {
+    tweet(params, 'statuses/retweet/:id');
+    tweet(params, 'favorites/create');
+  }
+  catch(err) {
+    // eslint-disable-next-line
+    console.log(err);
+  }
+}, interval);
