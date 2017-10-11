@@ -4,9 +4,7 @@
 
 ## About
 
-A twitter bot to retweet and favorite recent tweets with the tags: `'#nodejs #javascript #es6 #reactjs`
-
-See the docs on query limitations [here](https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets).
+A twitter bot to retweet and favorite recent tweets every *5 minutes* with the tags: `#nodejs #javascript #es6 #reactjs`.
 
 ## Prerequisites
 
@@ -21,11 +19,23 @@ ACCESS_TOKEN=???
 ACCESS_TOKEN_SECRET=???
 ```
 
-## Twiter API Search Query
+## Twiter API
 
-* [twit](https://www.npmjs.com/package/twit) - Twitter API Client for Node
+This app uses [twit](https://www.npmjs.com/package/twit), the Twitter API Client for Node.
+
+### *Endpoints*
+
+Description | Request
+--|--
+Search twitter | `GET search/tweets`
+Retweet the results | `POST statuses/retweet/:id`
+Favorite a tweet | `POST favorites/create`
+
+### *Notes*
+
 * The free version of the Twitter API is limited to 100 calls per hour.
 * Query string must be UTF-8, 500 characters max and limited complexity.
+* See the docs on search specs [here](https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets).
 
 ## Author
 
