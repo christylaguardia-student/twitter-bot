@@ -1,26 +1,25 @@
-const tweet = require('./src/tweet');
-const hashtags = require('./src/hashtags');
+/* eslint no-console: "off" */
 
-const interval = 5000;//120000; // 2 minutes
+const tweet = require('./lib/tweet');
+const hashtags = require('./lib/hashtags');
 
+const interval = 600000; // 5 minutes
 const params = {
   q: hashtags,
+  lang: 'en',
   result_type: 'recent',
-  lang: 'en'
+  count: 10
 };
 
-// initial tweets
 tweet(params, 'statuses/retweet/:id');
 tweet(params, 'favorites/create');
 
-// scheduled tweets
 setInterval(() => {
   try {
     tweet(params, 'statuses/retweet/:id');
     tweet(params, 'favorites/create');
   }
   catch(err) {
-    // eslint-disable-next-line
     console.log(err);
   }
 }, interval);

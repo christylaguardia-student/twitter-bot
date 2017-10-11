@@ -20,5 +20,6 @@
   "dependencies": {
     "dotenv": "^4.0.0",
     "twit": "^2.2.9"
-  }
+  },
+  "devDependencies": {}
 }
